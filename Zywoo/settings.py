@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'user',
+    'subscription',
+    'colorfield'
 ]
 
 MIDDLEWARE = [
@@ -127,4 +130,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'main/static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+AUTH_USER_MODEL = "user.User"
 CART_SESSION_ID = 'cart'

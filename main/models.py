@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from colorfield.fields import ColorField
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
@@ -58,6 +59,7 @@ class Size(models.Model):
 class Color(models.Model):
     name = models.DecimalField(max_digits=10, decimal_places=1, unique=True)
     slug = models.SlugField(unique=True)
+    hex_code = ColorField(max_length=7, blank=True, default='')
 
     def __str__(self):
         return self.name
