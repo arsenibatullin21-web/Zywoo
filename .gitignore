@@ -1,7 +1,8 @@
-main
-feature/auth
-feature/products
-feature/cart
-feature/orders
-feature/stripe-checkout
-feature/subscriptions
+.venv/
+venv/
+__pycache__/
+*.pyc
+db.sqlite3
+.env
+media/
+staticfiles/
