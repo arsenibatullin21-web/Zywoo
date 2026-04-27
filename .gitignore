@@ -1,0 +1,7 @@
+main
+feature/auth
+feature/products
+feature/cart
+feature/orders
+feature/stripe-checkout
+feature/subscriptions
