@@ -1,0 +1,226 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Zywoo | Premium Activewear{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="home-hero">
+    <img
+        src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=2200&q=85"
+        alt="Athlete training in premium activewear"
+    >
+    <div class="hero-content">
+        <p class="section-kicker">Summer 26 Collection</p>
+        <h1>Oasis</h1>
+        <p>Technical layers for heat, motion, and everything after training.</p>
+        <a class="primary-button" href="#">Shop Now</a>
+    </div>
+</section>
+
+<section class="product-section">
+    <div class="section-heading">
+        <div>
+            <p class="section-kicker">New drop</p>
+            <h2>Summer Collection</h2>
+        </div>
+        <a class="text-link" href="#">View All</a>
+    </div>
+
+    <div class="product-grid">
+        {% for product in cover_products|slice:4 %}
+        <article class="product-card">
+            <a class="product-media" href="#">
+                <img src="{{ product.main_image.url }}" alt="{{ product.main_image.name }}">
+                <span class="product-badge">New</span>
+            </a>
+            <div class="product-info">
+                <h3>{{ product.name }}</h3>
+                <div class="product-sizes">
+                    <span>XS</span>
+                    <span>S</span>
+                    <span>M</span>
+                    <span>L</span>
+                    <span>XL</span>
+                </div>
+                <p>${{ product.price }} USD</p>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="feature-collection">
+    <div class="feature-image-grid">
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=85" alt="Ripstop gym bag">
+        <img src="https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=900&q=85" alt="Training bag detail">
+    </div>
+    <div class="feature-copy">
+        <p class="section-kicker">Capsule</p>
+        <h2>Ripstop Bag Capsule</h2>
+        <p>Waterproof carry solutions with reinforced construction, clean lines, and everyday utility.</p>
+        <a class="primary-button dark-button" href="#">Shop Bags</a>
+    </div>
+</section>
+
+<section class="product-section compact-section">
+    <div class="section-heading">
+        <div>
+            <p class="section-kicker">Carry</p>
+            <h2>Ripstop Essentials</h2>
+        </div>
+        <a class="text-link" href="#">View All</a>
+    </div>
+
+    <div class="product-grid product-grid-small">
+        {% for bag in products_bags|slice:4 %}
+            <article class="product-card">
+                <a class="product-media square-media" href="#">
+                    <img src="{{ bag.main_image.url }}" alt="{{ bag.main_image.name }}">
+                </a>
+                <div class="product-info">
+                    <h3>{{ bag.name }}</h3>
+                    <p>${{ bag.price }} USD</p>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="split-promo">
+    <article>
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1300&q=85" alt="Woman training in studio">
+        <div>
+            <p class="section-kicker">Women</p>
+            <h2>Color Pack</h2>
+            <a class="light-link" href="#">Shop Women</a>
+        </div>
+    </article>
+
+    <article>
+        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1300&q=85" alt="Man lifting weights">
+        <div>
+            <p class="section-kicker">Men</p>
+            <h2>Training Systems</h2>
+            <a class="light-link" href="#">Shop Men</a>
+        </div>
+    </article>
+</section>
+
+<section class="statement-banner">
+    <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=2200&q=85" alt="Running group on track">
+    <div>
+        <h2>Endurance is the measure of consistency.</h2>
+        <div class="statement-actions">
+            <a class="primary-button" href="#">Shop Men</a>
+            <a class="primary-button outline-button" href="#">Shop Women</a>
+        </div>
+    </div>
+</section>
+
+<section class="activity-section">
+    <article>
+        <img src="https://images.unsplash.com/photo-1486218119243-13883505764c?auto=format&fit=crop&w=1000&q=85" alt="Runner on road">
+        <div>
+            <h2>Run</h2>
+            <p>Lightweight layers for distance, pace, and heat management.</p>
+            <a href="#">Men</a>
+            <a href="#">Women</a>
+        </div>
+    </article>
+
+    <article>
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=85" alt="Strength training gym">
+        <div>
+            <h2>Train</h2>
+            <p>Durable silhouettes built for lifting, conditioning, and mobility.</p>
+            <a href="#">Men</a>
+            <a href="#">Women</a>
+        </div>
+    </article>
+
+    <article>
+        <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1000&q=85" alt="Recovery activewear">
+        <div>
+            <h2>Rec</h2>
+            <p>Clean technical essentials for recovery and daily movement.</p>
+            <a href="#">Men</a>
+            <a href="#">Women</a>
+        </div>
+    </article>
+</section>
+
+<section class="product-section">
+    <div class="section-heading">
+        <div>
+            <p class="section-kicker">Most wanted</p>
+            <h2>Bestsellers</h2>
+        </div>
+        <a class="text-link" href="#">View All</a>
+    </div>
+
+    <div class="product-grid bestseller-grid">
+        <article class="product-card">
+            <a class="product-media" href="#">
+                <img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=900&q=85" alt="Black established tee">
+            </a>
+            <div class="product-info">
+                <h3>AeroSilver Established Tee - Black</h3>
+                <div class="product-sizes"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span></div>
+                <p>$68 USD</p>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <a class="product-media" href="#">
+                <img src="https://images.unsplash.com/photo-1583744946564-b52d01e7f922?auto=format&fit=crop&w=900&q=85" alt="Black liner short">
+            </a>
+            <div class="product-info">
+                <h3>Tetra-Lite Liner Short - Black</h3>
+                <div class="product-sizes"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span></div>
+                <p>$138 USD</p>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <a class="product-media" href="#">
+                <img src="https://images.unsplash.com/photo-1548883354-94bcfe321cbb?auto=format&fit=crop&w=900&q=85" alt="Cargo jogger">
+            </a>
+            <div class="product-info">
+                <h3>Cargo High Rib Jogger - Black</h3>
+                <div class="product-sizes"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span></div>
+                <p>$158 USD</p>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <a class="product-media" href="#">
+                <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=85" alt="Essential tee navy">
+            </a>
+            <div class="product-info">
+                <h3>Supima Essential Tee - Navy</h3>
+                <div class="product-sizes"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span></div>
+                <p>$78 USD</p>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="category-strip">
+    <a href="#">
+        <span>Tops</span>
+        <strong>Men's / Women's</strong>
+    </a>
+    <a href="#">
+        <span>Bottoms</span>
+        <strong>Training / Running</strong>
+    </a>
+    <a href="#">
+        <span>Accessories</span>
+        <strong>Bags / Hats / Socks</strong>
+    </a>
+</section>
+{% endblock %}
