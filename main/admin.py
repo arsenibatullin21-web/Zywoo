@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from main.models import Category, ProductImage, Product, Size, Color, PromoCode
+from main.models import Category, ProductImage, Product, Size, Color, PromoCode, ProductVariant
 
 
 # Register your models here.
@@ -10,7 +10,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     search_fields = ['name']
     list_display_links = ['name']
-    fields = ['name', 'slug', 'description', 'image']
+    fields = ['name', 'slug', 'parent','description', 'image']
     prepopulated_fields = {'slug': ('name',)}
 
 
@@ -20,11 +20,10 @@ class ProductImageInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'price', 'quantity', 'discount' ,'description', 'available', 'created_at', 'updated_at']
-    list_editable = ['price', 'quantity']
+    list_display = ['name', 'slug', 'price', 'discount' , 'available', 'gender']
+    list_editable = ['price']
     search_fields = ['name']
     prepopulated_fields = {'slug': ('name',)}
-    actions = ['NotAv']
     inlines = [ProductImageInline]
 
 @admin.register(Size)
@@ -32,7 +31,7 @@ class SizeAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     fields = ['name', 'slug']
     search_fields = ['name']
-    repopulated_fields = {'slug': ('name',)}
+    prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
@@ -46,3 +45,9 @@ class PromoCodeAdmin(admin.ModelAdmin):
     list_display = ['name', 'discount']
     fields = ['name', 'discount']
 
+
+@admin.register(ProductVariant)
+class ProductVariantAdmin(admin.ModelAdmin):
+    list_display = ['product', 'size', 'color', 'discount' ,'quantity', 'available', 'created_at', 'updated_at']
+    list_editable = ['quantity']
+    search_fields = ['product__name']
