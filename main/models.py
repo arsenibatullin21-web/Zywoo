@@ -88,6 +88,7 @@ class Product(models.Model):
     class Gender(models.TextChoices):
         MEN = 'men', 'Men'
         WOMEN = 'women', 'Women'
+        UNISEX = 'unisex', 'Unisex'
 
 
     name = models.CharField(max_length=100)

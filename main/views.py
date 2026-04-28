@@ -9,8 +9,11 @@ from main.models import Product, Category
 class HomePageView(ListView):
     model = Product
     template_name = 'main/home.html'
-    context_object_name = 'products'
+    context_object_name = 'products_all'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
+        context['cover_products'] = Product.objects.exclude(category__slug__iexact='bags')
+        context['products_bags'] = Product.objects.filter(category__slug='bags')
+        return context
