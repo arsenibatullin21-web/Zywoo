@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Summer Collection | Zywoo{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="catalog-lookbook">
+    <div class="lookbook-frame wide">
+        <img src="https://images.unsplash.com/photo-1517963628607-235ccdd5476c?auto=format&fit=crop&w=1500&q=85" alt="Runner stretching before summer training">
+    </div>
+    <div class="lookbook-frame">
+        <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1000&q=85" alt="Training apparel closeup">
+    </div>
+    <div class="lookbook-frame">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1000&q=85" alt="Athlete lifting in performance clothing">
+    </div>
+</section>
+
+<section class="collection-intro">
+    <p class="catalog-kicker">Technical solutions for warm-weather wear</p>
+    <h1>Summer Collection</h1>
+    <p>
+        Lightweight training layers, breathable textures, and daily uniform pieces built for heat,
+        movement, and recovery.
+    </p>
+</section>
+
+<section class="catalog-shell">
+<form action="{% url 'main:catalog' %}" method="GET" id="catalog-filter-form" class="catalog-filter-form"
+      hx-get="{% url 'main:catalog' %}"
+      hx-target="#catalog-results"
+      hx-push-url="true"
+      hx-trigger="change"
+>
+
+    <div id="catalog-results" class="catalog-results">
+        {% include 'main/partials/catalog_partial.html' %}
+    </div>
+
+</form>
+</section>
+{% endblock %}

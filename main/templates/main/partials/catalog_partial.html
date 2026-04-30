@@ -1,0 +1,110 @@
+<aside class="catalog-filter" aria-label="Catalog filters">
+
+            <div class="filter-header">
+                <span>Filters</span>
+                <a href="{% url 'main:catalog' %}" class="clear-filters-button"
+                    hx-get="{% url 'main:catalog' %}"
+                   hx-target="#catalog-results"
+                   hx-push-url="true"
+                >
+                    Clear all
+                </a>
+            </div>
+
+            <details open>
+                <summary>Product Type</summary>
+                <label class="filter-checkbox {% if category == cat %}active{% endif %}">
+                    <input type="radio" name="category" {% if cat == category %}checked{% endif %} value="{{ cat.slug }}">
+                        All
+                        <span>{{ total_products }}</span>
+                </label>
+                {% for cat in categories %}
+                    <label class="filter-checkbox {% if category == cat %}active{% endif %}">
+                        <input type="radio" name="category" {% if cat == category %}checked{% endif %} value="{{ cat.slug }}">
+                        {{ cat.name }}
+                        <span>{{ cat.products.count }}</span>
+                    </label>
+                {% endfor %}
+            </details>
+
+            <details open>
+                <summary>Gender</summary>
+                 <label><input type="radio" name="gender" value=""  {% if selected_gender == '' %}checked{% endif %}> All <span></span></label>
+                <label><input type="radio" name="gender" value="men"  {% if selected_gender == 'men' %}checked{% endif %}> Men <span></span></label>
+                <label><input type="radio" name="gender" value="women" {% if selected_gender == 'women' %}checked{% endif %}> Women <span></span></label>
+                <label><input type="radio" name="gender" value="unisex" {% if selected_gender == 'unisex' %}checked{% endif %}> Unisex <span></span></label>
+            </details>
+
+            <details open>
+                <summary>Color</summary>
+                <div class="color-filter-grid">
+                    <label class="color-swatch-option" aria-label="Black">
+                        <input type="checkbox" name="color" value="black" {% if 'black' in selected_colors %}checked{% endif %}>
+                        <span class="swatch black"></span>
+                    </label>
+                    <label class="color-swatch-option" aria-label="Blue">
+                        <input type="checkbox" name="color" value="blue" {% if 'blue' in selected_colors %}checked{% endif %}>
+                        <span class="swatch blue"></span>
+                    </label>
+                    <label class="color-swatch-option" aria-label="Grey">
+                        <input type="checkbox" name="color" value="grey" {% if 'grey' in selected_colors %}checked{% endif %}>
+                        <span class="swatch grey"></span>
+                    </label>
+                    <label class="color-swatch-option" aria-label="White">
+                        <input type="checkbox" name="color" value="white" {% if 'white' in selected_colors %}checked{% endif %}>
+                        <span class="swatch white"></span>
+                    </label>
+                    <label class="color-swatch-option" aria-label="Camo">
+                        <input type="checkbox" name="color" value="camo" {% if 'camo' in selected_colors %}checked{% endif %}>
+                        <span class="swatch camo"></span>
+                    </label>
+                </div>
+            </details>
+        <button type="submit" class="apply-filters-button">Apply filters</button>
+    </aside>
+
+        <div class="catalog-content">
+            <div class="catalog-toolbar">
+                <button class="toolbar-button" type="button">
+                    <i class="fa-solid fa-sliders"></i>
+                    Filter
+                </button>
+
+                <div class="catalog-count">{{ products.count }} Products</div>
+
+                <label class="sort-control">
+                    <span>Sort</span>
+                    <select name="sort">
+                        <option value="featured" {% if selected_sort == 'featured' %}selected{% endif %}>Featured</option>
+                        <option value="highrate" {% if selected_sort == 'highrate' %}selected{% endif %}>Best selling</option>
+                        <option value="pricelow" {% if selected_sort == 'pricelow' %}selected{% endif %}>Price, low to high</option>
+                        <option value="pricehigh" {% if selected_sort == 'pricehigh' %}selected{% endif %}>Price, high to low</option>
+                        <option value="newtoold" {% if selected_sort == 'newtoold' %}selected{% endif %}>Date, new to old</option>
+                    </select>
+                </label>
+            </div>
+
+
+            <div class="catalog-grid">
+
+                {% for product in products %}
+                    <article class="catalog-card">
+                        <a class="catalog-card-media" href="#">
+                            <img src="{{ product.main_image.url }}" alt="{{ product.name}}">
+                            <span class="sale-badge">Sale</span>
+                        </a>
+                        <div class="catalog-card-body">
+                            <h2>{{ product.name }}</h2>
+                            <div class="card-sizes"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span><span>XXL</span></div>
+                            <p>
+                                {% if product.discount %}
+                                    <span class="sale-price">${{ product.final_price }} USD</span> <span class="old-price">${{ product.price }} USD</span></p>
+                                {% else %}
+                                    <p>${{ product.price }} USD</p>
+                                {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+
+            </div>
+        </div>
