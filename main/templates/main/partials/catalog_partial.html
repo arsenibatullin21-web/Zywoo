@@ -91,7 +91,7 @@
 
                 {% for product in products %}
                     <article class="catalog-card">
-                        <a class="catalog-card-media" href="#">
+                        <a class="catalog-card-media" href="{% url 'main:detail' product.slug %}">
                             <img src="{{ product.main_image.url }}" alt="{{ product.name}}">
                             <span class="sale-badge">Sale</span>
                         </a>

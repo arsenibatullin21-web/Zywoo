@@ -33,7 +33,7 @@
     <div class="product-grid">
         {% for product in cover_products|slice:4 %}
         <article class="product-card">
-            <a class="product-media" href="#">
+            <a class="product-media" href="{% url 'main:detail' product.slug %}">
                 <img src="{{ product.main_image.url }}" alt="{{ product.main_image.name }}">
                 <span class="product-badge">New</span>
             </a>
@@ -78,7 +78,7 @@
     <div class="product-grid product-grid-small">
         {% for bag in products_bags|slice:4 %}
             <article class="product-card">
-                <a class="product-media square-media" href="#">
+                <a class="product-media square-media" href="{% url 'main:detail' bag.slug %}">
                     <img src="{{ bag.main_image.url }}" alt="{{ bag.main_image.name }}">
                 </a>
                 <div class="product-info">

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from main.models import Product, Category
 
@@ -123,3 +123,16 @@ class GenderPageView(CatalogFilterMixin, ListView):
         return ['main/gender_catalog.html']
 
 
+class ProductDetailPageView(DetailView):
+    model = Product
+    template_name = 'main/product_detail.html'
+    slug_url_kwarg = 'product_slug'
+    context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product_slug = self.kwargs.get('product_slug')
+        product = Product.objects.filter(slug=product_slug).first()
+
+        context['images'] = product.images.all()
+        return context

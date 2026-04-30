@@ -132,8 +132,8 @@ class Product(models.Model):
             return (self.price - discount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         return self.price
 
-    # def get_absolute_url(self):
-    #     return reverse('', kwargs={''})
+    def get_absolute_url(self):
+        return reverse('main:detail', kwargs={'slug': 'product_slug'})
 
 
 

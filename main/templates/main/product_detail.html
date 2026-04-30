@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 {% load static %}
 
-{% block title %}Weather-Ready Ripstop Shell Jacket | Zywoo{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
@@ -10,57 +10,33 @@
 {% block content %}
 <section class="product-detail-page">
     <div class="product-gallery">
-        <a class="back-link" href="#"><i class="fa-solid fa-arrow-left"></i> Back</a>
+        <a class="back-link" href="{% url 'main:catalog' %}"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
         <div class="gallery-grid">
             <figure class="gallery-item large">
-                <img src="https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=1300&q=85" alt="Amber transparent shell jacket front view">
+                <img src="{{ product.main_image.url }}" alt="{{ product.name }}">
             </figure>
-            <figure class="gallery-item large">
-                <img src="https://images.unsplash.com/photo-1506629905607-d9f297d024a2?auto=format&fit=crop&w=1300&q=85" alt="Amber shell jacket side view">
-            </figure>
-            <figure class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=85" alt="Weather-ready jacket on model">
-            </figure>
-            <figure class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1000&q=85" alt="Ripstop jacket detail">
-            </figure>
-            <figure class="gallery-item wide">
-                <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1500&q=85" alt="Technical shell jacket lifestyle detail">
-            </figure>
-            <figure class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&w=1000&q=85" alt="Running-ready shell jacket movement">
-            </figure>
-            <figure class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=85" alt="Transparent ripstop fabric closeup">
-            </figure>
+            {% for img in images %}
+                <figure class="gallery-item large">
+                    <img src="{{ img.url }}" alt="{{ product.name }}">
+                </figure>
+            {% endfor %}
         </div>
     </div>
 
     <aside class="product-buy-panel">
         <p class="product-code">DSG-1162</p>
-        <h1>Weather-Ready Transparent Ripstop Shell Jacket</h1>
-        <p class="product-color-name">Amber</p>
-        <p class="product-price">$198 USD</p>
+        <h1>{{ product.name }}</h1>
+{#        <p class="product-color-name"></p>#}
+        {% if product.discount %}
+            <p class="product-price" style="text-decoration: line-through; color: red">${{ product.price }} USD</p><span>${{ product.final_price }} USD</span>
+        {% else %}
+            <p class="product-price">${{ product.price }} USD</p>
+        {% endif %}
 
         <div class="product-option-block">
             <div class="option-heading">
                 <span>Color:</span>
-                <strong>Amber</strong>
-            </div>
-            <div class="color-options">
-                <label class="detail-color-option selected" aria-label="Amber">
-                    <input type="radio" name="color" checked>
-                    <span class="detail-swatch amber"></span>
-                </label>
-                <label class="detail-color-option" aria-label="Smoke">
-                    <input type="radio" name="color">
-                    <span class="detail-swatch smoke"></span>
-                </label>
-                <label class="detail-color-option" aria-label="Black">
-                    <input type="radio" name="color">
-                    <span class="detail-swatch black"></span>
-                </label>
             </div>
         </div>
 
@@ -85,8 +61,7 @@
             <details open>
                 <summary>Description</summary>
                 <p>
-                    Ultra-lightweight weather-ready shell built for wind resistance and light rain protection.
-                    Transparent ripstop nylon creates durable coverage with a distinctive technical look.
+                   {{ product.description }}
                 </p>
                 <ul>
                     <li>Lightweight nylon ripstop shell with DWR finish</li>
