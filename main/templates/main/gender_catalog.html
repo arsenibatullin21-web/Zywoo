@@ -1,0 +1,63 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}{{ catalog_title }} | Zywoo{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/gender_catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="gender-hero gender-{{ catalog_gender }}">
+    {% if catalog_gender == "men" %}
+        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=2200&q=85" alt="Men training in Zywoo activewear">
+        <div class="gender-hero-panel">
+            <p>Technical Menswear</p>
+            <h1>Men</h1>
+            <span>Training systems for strength, speed, and recovery.</span>
+        </div>
+    {% else %}
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=2200&q=85" alt="Women training in Zywoo activewear">
+        <div class="gender-hero-panel">
+            <p>Performance Womenswear</p>
+            <h1>Women</h1>
+            <span>Lightweight layers for studio work, distance, and daily movement.</span>
+        </div>
+    {% endif %}
+</section>
+
+<section class="gender-story gender-{{ catalog_gender }}">
+    <div>
+        <p class="gender-kicker">Shop By Activity</p>
+        <h2>{{ catalog_title }}'s Systems</h2>
+    </div>
+    <div class="gender-story-grid">
+        <a href="#">
+            <span>Run</span>
+            <strong>Breathable pace layers</strong>
+        </a>
+        <a href="#">
+            <span>Train</span>
+            <strong>Durable gym essentials</strong>
+        </a>
+        <a href="#">
+            <span>Recover</span>
+            <strong>Soft daily uniforms</strong>
+        </a>
+    </div>
+</section>
+
+<section class="catalog-shell gender-catalog-shell">
+    <form action="{{ catalog_clear_url }}" method="GET" id="catalog-filter-form" class="catalog-filter-form"
+          hx-get="{{ catalog_clear_url }}"
+          hx-target="#catalog-results"
+          hx-push-url="true"
+          hx-trigger="change"
+    >
+        <div id="catalog-results" class="catalog-results">
+            {% include 'main/partials/catalog_partial.html' %}
+        </div>
+    </form>
+</section>
+{% endblock %}

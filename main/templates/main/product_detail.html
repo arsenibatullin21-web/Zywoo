@@ -1,0 +1,165 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Weather-Ready Ripstop Shell Jacket | Zywoo{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="product-detail-page">
+    <div class="product-gallery">
+        <a class="back-link" href="#"><i class="fa-solid fa-arrow-left"></i> Back</a>
+
+        <div class="gallery-grid">
+            <figure class="gallery-item large">
+                <img src="https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=1300&q=85" alt="Amber transparent shell jacket front view">
+            </figure>
+            <figure class="gallery-item large">
+                <img src="https://images.unsplash.com/photo-1506629905607-d9f297d024a2?auto=format&fit=crop&w=1300&q=85" alt="Amber shell jacket side view">
+            </figure>
+            <figure class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=85" alt="Weather-ready jacket on model">
+            </figure>
+            <figure class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1000&q=85" alt="Ripstop jacket detail">
+            </figure>
+            <figure class="gallery-item wide">
+                <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1500&q=85" alt="Technical shell jacket lifestyle detail">
+            </figure>
+            <figure class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&w=1000&q=85" alt="Running-ready shell jacket movement">
+            </figure>
+            <figure class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=85" alt="Transparent ripstop fabric closeup">
+            </figure>
+        </div>
+    </div>
+
+    <aside class="product-buy-panel">
+        <p class="product-code">DSG-1162</p>
+        <h1>Weather-Ready Transparent Ripstop Shell Jacket</h1>
+        <p class="product-color-name">Amber</p>
+        <p class="product-price">$198 USD</p>
+
+        <div class="product-option-block">
+            <div class="option-heading">
+                <span>Color:</span>
+                <strong>Amber</strong>
+            </div>
+            <div class="color-options">
+                <label class="detail-color-option selected" aria-label="Amber">
+                    <input type="radio" name="color" checked>
+                    <span class="detail-swatch amber"></span>
+                </label>
+                <label class="detail-color-option" aria-label="Smoke">
+                    <input type="radio" name="color">
+                    <span class="detail-swatch smoke"></span>
+                </label>
+                <label class="detail-color-option" aria-label="Black">
+                    <input type="radio" name="color">
+                    <span class="detail-swatch black"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="product-option-block">
+            <div class="option-heading">
+                <span>Size:</span>
+                <a href="#">Size Guide</a>
+            </div>
+            <div class="size-options">
+                <label><input type="radio" name="size"><span>XXS</span></label>
+                <label><input type="radio" name="size"><span>XS</span></label>
+                <label><input type="radio" name="size" checked><span>S</span></label>
+                <label><input type="radio" name="size"><span>M</span></label>
+                <label><input type="radio" name="size"><span>L</span></label>
+                <label><input type="radio" name="size"><span>XL</span></label>
+            </div>
+        </div>
+
+        <button class="add-to-cart-button" type="button">Add To Cart</button>
+
+        <div class="product-accordions">
+            <details open>
+                <summary>Description</summary>
+                <p>
+                    Ultra-lightweight weather-ready shell built for wind resistance and light rain protection.
+                    Transparent ripstop nylon creates durable coverage with a distinctive technical look.
+                </p>
+                <ul>
+                    <li>Lightweight nylon ripstop shell with DWR finish</li>
+                    <li>Wind-resistant construction for variable conditions</li>
+                    <li>Adjustable hood with integrated drawcord system</li>
+                    <li>Underarm ventilation eyelets for airflow</li>
+                    <li>Reflective heat-transfer logo detailing</li>
+                </ul>
+            </details>
+
+            <details>
+                <summary>Fabric + Technology</summary>
+                <p>100% nylon ripstop with transparent construction and water-repellent finish.</p>
+            </details>
+
+            <details>
+                <summary>Fabric Care</summary>
+                <p>Machine wash cold with like colors. Hang dry. Do not iron or bleach.</p>
+            </details>
+        </div>
+    </aside>
+</section>
+
+<section class="designed-for-section">
+    <div class="section-title-row">
+        <p>Designed For</p>
+        <h2>Run / Rec</h2>
+    </div>
+    <div class="designed-cards">
+        <article>
+            <img src="https://images.unsplash.com/photo-1486218119243-13883505764c?auto=format&fit=crop&w=900&q=85" alt="Runner training outside">
+            <div>
+                <h3>Run</h3>
+                <p>Specialized gear for high-intensity running and training.</p>
+            </div>
+        </article>
+        <article>
+            <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=900&q=85" alt="Recovery activewear setting">
+            <div>
+                <h3>Rec</h3>
+                <p>Technical, durable gear for everyday use and recovery.</p>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="technical-highlight">
+    <div class="highlight-copy">
+        <p>Technical Highlights</p>
+        <h2>Built For Changing Conditions</h2>
+    </div>
+    <div class="highlight-grid">
+        <article>
+            <img src="https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=900&q=85" alt="Ventilation detail">
+            <h3>Underarm Ventilation</h3>
+        </article>
+        <article>
+            <img src="https://images.unsplash.com/photo-1516826957135-700dedea698c?auto=format&fit=crop&w=900&q=85" alt="Storm flap detail">
+            <h3>Mesh-Backed Storm Flap</h3>
+        </article>
+        <article>
+            <img src="https://images.unsplash.com/photo-1516822003754-cca485356ecb?auto=format&fit=crop&w=900&q=85" alt="Adjustable hood detail">
+            <h3>Adjustable Hood System</h3>
+        </article>
+    </div>
+</section>
+
+<section class="fit-section">
+    <img src="https://images.unsplash.com/photo-1539701938214-0d9736e1c16b?auto=format&fit=crop&w=1800&q=85" alt="Relaxed fit shell jacket">
+    <div>
+        <p>Relaxed Fit</p>
+        <h2>Easy Layering Without Extra Bulk</h2>
+        <span>This product provides a slightly looser, comfortable fit for everyday wear.</span>
+    </div>
+</section>
+{% endblock %}
