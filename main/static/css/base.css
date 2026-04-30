@@ -71,12 +71,12 @@ a {
     text-transform: uppercase;
 }
 
-.primary-nav a {
+.nava {
     position: relative;
     padding: 27px 0;
 }
 
-.primary-nav a::after {
+.nava::after {
     position: absolute;
     right: 0;
     bottom: 20px;
@@ -89,7 +89,7 @@ a {
     transition: transform 180ms ease;
 }
 
-.primary-nav a:hover::after {
+.nava:hover::after {
     transform: scaleX(1);
 }
 
@@ -368,13 +368,21 @@ a {
     gap: 8px;
 }
 
-/*.filter-checkbox span {*/
-/*    width: 14px;*/
-/*    height: 14px;*/
-/*    border: 1px solid #111;*/
-/*}*/
+.curr {
+     position: relative;
+    padding: 27px 0;
+}
 
-/*.filter-checkbox.active span {*/
-/*    background: #111;*/
-/*}*/
+.curr::after {
+        position: absolute;
+    right: 0;
+    bottom: 20px;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    content: "";
+}
+
+
+
 

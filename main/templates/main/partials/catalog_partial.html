@@ -2,8 +2,8 @@
 
             <div class="filter-header">
                 <span>Filters</span>
-                <a href="{% url 'main:catalog' %}" class="clear-filters-button"
-                    hx-get="{% url 'main:catalog' %}"
+                <a href="{{ catalog_clear_url }}" class="clear-filters-button"
+                    hx-get="{{ catalog_clear_url }}"
                    hx-target="#catalog-results"
                    hx-push-url="true"
                 >
@@ -27,13 +27,15 @@
                 {% endfor %}
             </details>
 
-            <details open>
-                <summary>Gender</summary>
-                 <label><input type="radio" name="gender" value=""  {% if selected_gender == '' %}checked{% endif %}> All <span></span></label>
-                <label><input type="radio" name="gender" value="men"  {% if selected_gender == 'men' %}checked{% endif %}> Men <span></span></label>
-                <label><input type="radio" name="gender" value="women" {% if selected_gender == 'women' %}checked{% endif %}> Women <span></span></label>
-                <label><input type="radio" name="gender" value="unisex" {% if selected_gender == 'unisex' %}checked{% endif %}> Unisex <span></span></label>
-            </details>
+            {% if show_gender_filter %}
+                <details open>
+                    <summary>Gender</summary>
+                     <label><input type="radio" name="gender" value=""  {% if selected_gender == '' %}checked{% endif %}> All <span></span></label>
+                    <label><input type="radio" name="gender" value="men"  {% if selected_gender == 'men' %}checked{% endif %}> Men <span></span></label>
+                    <label><input type="radio" name="gender" value="women" {% if selected_gender == 'women' %}checked{% endif %}> Women <span></span></label>
+                    <label><input type="radio" name="gender" value="unisex" {% if selected_gender == 'unisex' %}checked{% endif %}> Unisex <span></span></label>
+                </details>
+            {% endif %}
 
             <details open>
                 <summary>Color</summary>

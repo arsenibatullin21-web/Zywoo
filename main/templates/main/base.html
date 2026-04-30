@@ -31,11 +31,11 @@
         </label>
 
         <nav class="primary-nav" aria-label="Primary navigation">
-            <a href="#">Men</a>
-            <a href="#">Women</a>
-            <a href="{% url 'main:catalog' %}">Collections</a>
-            <a href="#">Fabric Tech</a>
-            <a href="#">Explore</a>
+            <a href="{% url 'main:men_catalog' %}" class="{% if 'mens' in request.path %}curr{% else %}nava{% endif %}">Men</a>
+            <a href="{% url 'main:women_catalog' %}" class="{% if 'women' in request.path %}curr{% else %}nava{% endif %}">Women</a>
+            <a href="{% url 'main:catalog' %}" class="{% if 'collection' in request.path %}curr{% else %}nava{% endif %}">Collections</a>
+            <a href="#" class="nava">Fabric Tech</a>
+            <a href="#" class="nava">Explore</a>
         </nav>
 
         <a class="brand-mark" href="/" aria-label="Zywoo home">GYMSHARK</a>
