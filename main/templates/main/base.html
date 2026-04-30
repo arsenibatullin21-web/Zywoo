@@ -33,7 +33,7 @@
         <nav class="primary-nav" aria-label="Primary navigation">
             <a href="#">Men</a>
             <a href="#">Women</a>
-            <a href="#">Collections</a>
+            <a href="{% url 'main:catalog' %}">Collections</a>
             <a href="#">Fabric Tech</a>
             <a href="#">Explore</a>
         </nav>
@@ -108,5 +108,16 @@
 </footer>
 
 <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+{% block extra_js %}{% endblock %}
+{#<script>#}
+{#    const filterForm = document.getElementById("catalog-filter-form");#}
+{##}
+{#    filterForm.querySelectorAll("input, select").forEach((field) => {#}
+{#        field.addEventListener("change", () => {#}
+{#            filterForm.submit();#}
+{#        });#}
+{#    });#}
+{#</script>#}
+
 </body>
 </html>

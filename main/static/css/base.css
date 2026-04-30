@@ -361,3 +361,20 @@ a {
         padding-left: 18px;
     }
 }
+
+.filter-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/*.filter-checkbox span {*/
+/*    width: 14px;*/
+/*    height: 14px;*/
+/*    border: 1px solid #111;*/
+/*}*/
+
+/*.filter-checkbox.active span {*/
+/*    background: #111;*/
+/*}*/
+
