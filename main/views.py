@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
 
-from main.models import Product, Category
+from cart.forms import CartAddForm
+from main.models import Product, Category, Color, Size
 
 
 # Create your views here.
@@ -135,4 +136,11 @@ class ProductDetailPageView(DetailView):
         product = Product.objects.filter(slug=product_slug).first()
 
         context['images'] = product.images.all()
+        context['form'] = CartAddForm()
+        context['colors'] = Color.objects.all()
+        context['sizes'] = Size.objects.all()
+        context["available_size_ids"] = product.variants.filter(
+            available=True,
+            quantity__gt=0
+        ).values_list("size_id", flat=True)
         return context

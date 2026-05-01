@@ -384,5 +384,14 @@ a {
 }
 
 
+.size-options label.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    color: gray;
+}
+
+.size-options label.disabled span {
+    text-decoration: line-through;
+}
 
 

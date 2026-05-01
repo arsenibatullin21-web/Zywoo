@@ -133,7 +133,7 @@ class Product(models.Model):
         return self.price
 
     def get_absolute_url(self):
-        return reverse('main:detail', kwargs={'slug': 'product_slug'})
+        return reverse('main:detail', kwargs={'product_slug': self.slug})
 
 
 
@@ -164,8 +164,8 @@ class PromoCode(models.Model):
 
 class ProductVariant(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="variants")
-    size = models.ForeignKey(Size, on_delete=models.PROTECT, related_name="variants")
-    color = models.ForeignKey(Color, on_delete=models.PROTECT, related_name="variants")
+    size = models.ForeignKey(Size, related_name="variants", on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, related_name="variants", on_delete=models.CASCADE)
     sku = models.CharField(max_length=100, unique=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.PositiveIntegerField(default=0)
@@ -181,6 +181,10 @@ class ProductVariant(models.Model):
                 fields=["product", "size", "color"],
                 name="unique_product_size_color"
             )
+        ]
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['-created_at'])
         ]
 
     def __str__(self):

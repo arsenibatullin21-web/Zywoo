@@ -38,13 +38,15 @@
             <a href="#" class="nava">Explore</a>
         </nav>
 
-        <a class="brand-mark" href="/" aria-label="Zywoo home">GYMSHARK</a>
+        <a class="brand-mark" href="{% url 'main:home' %}" aria-label="Zywoo home">GYMSHARK</a>
 
         <div class="header-actions" aria-label="Shop actions">
             <a href="#" aria-label="Locations"><i class="fa-solid fa-location-dot"></i></a>
             <a href="#" aria-label="Account"><i class="fa-regular fa-user"></i></a>
             <a href="#" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
-            <a href="#" aria-label="Cart"><i class="fa-solid fa-bag-shopping"></i><span class="cart-count">0</span></a>
+            <a id='cart-budge' href="{% url 'cart:detail' %}" aria-label="Cart">
+                {% include 'cart/partials/cart-budge.html' %}
+            </a>
         </div>
     </div>
 </header>

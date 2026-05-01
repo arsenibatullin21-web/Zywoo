@@ -48,6 +48,6 @@ class PromoCodeAdmin(admin.ModelAdmin):
 
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ['product', 'size', 'color', 'discount' ,'quantity', 'available', 'created_at', 'updated_at']
+    list_display = ['product', 'discount' ,'quantity', 'available', 'created_at', 'updated_at']
     list_editable = ['quantity']
     search_fields = ['product__name']

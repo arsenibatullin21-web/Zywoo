@@ -29,33 +29,51 @@
         <h1>{{ product.name }}</h1>
 {#        <p class="product-color-name"></p>#}
         {% if product.discount %}
-            <p class="product-price" style="text-decoration: line-through; color: red">${{ product.price }} USD</p><span>${{ product.final_price }} USD</span>
+            <div class="">
+            <p class="product-price" style="text-decoration: line-through; color: red">${{ product.price }} USD</p>
+            <p style="font-weight: bold">${{ product.final_price }} USD</p>
+            </div>
         {% else %}
             <p class="product-price">${{ product.price }} USD</p>
         {% endif %}
 
-        <div class="product-option-block">
-            <div class="option-heading">
-                <span>Color:</span>
+        <form action="{% url 'cart:add' product.id %}" method="post"
+            hx-post="{% url 'cart:add' product.id %}"
+              hx-target="#cart-budge"
+        >
+            {% csrf_token %}
+            <div class="product-option-block">
+                <div class="option-heading">
+                    <span>Color:</span>
+                </div>
+                <div class="color-options">
+                    {% for color in colors %}
+                        <label class="detail-color-option {% if color.id not in available_color_ids %}disabled{% endif %}" aria-label="{{ color.name }}">
+                            <input type="radio" name="color" value="{{ color.id }}" {% if color.id not in available_color_ids %}disabled{% endif %}>
+                            <span class="detail-swatch" style="background-color: {{ color.hex_code }};"></span>
+                        </label>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
 
-        <div class="product-option-block">
-            <div class="option-heading">
-                <span>Size:</span>
-                <a href="#">Size Guide</a>
+            <div class="product-option-block">
+                <div class="option-heading">
+                    <span>Size:</span>
+                    <a href="#">Size Guide</a>
+                </div>
+                <div class="size-options">
+                    {% for size in sizes %}
+                        <label id="{{ form.size.id_for_label }}" class="{% if size.id not in available_size_ids %}disabled{% endif %}">
+                            <input id="{{ form.size.id_for_label }}" type="radio" name="{{ form.size.html_name }}" value="{{ size.id }}" {% if size.id not in available_size_ids %}disabled{% endif %}>
+                            <span>{{ size.name }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="size-options">
-                <label><input type="radio" name="size"><span>XXS</span></label>
-                <label><input type="radio" name="size"><span>XS</span></label>
-                <label><input type="radio" name="size" checked><span>S</span></label>
-                <label><input type="radio" name="size"><span>M</span></label>
-                <label><input type="radio" name="size"><span>L</span></label>
-                <label><input type="radio" name="size"><span>XL</span></label>
-            </div>
-        </div>
 
-        <button class="add-to-cart-button" type="button">Add To Cart</button>
+            <button class="add-to-cart-button" type="submit">Add To Cart</button>
+
+        </form>
 
         <div class="product-accordions">
             <details open>
