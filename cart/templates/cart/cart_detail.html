@@ -1,0 +1,25 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Cart | Zywoo{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/cart_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="cart-page">
+    <div class="cart-hero">
+        <div>
+            <p class="cart-kicker">Secure Checkout</p>
+            <h1>Your Cart</h1>
+        </div>
+        <p>Free shipping on orders over $150</p>
+    </div>
+
+
+    <div class="cart-layout" id="catalog-shell">
+        {% include 'cart/partials/cart_partial.html' %}
+    </div>
+</section>
+{% endblock %}

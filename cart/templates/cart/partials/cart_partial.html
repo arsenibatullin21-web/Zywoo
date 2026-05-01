@@ -1,0 +1,118 @@
+<div class="cart-items">
+                {% for item in cart %}
+                    {% with item.product as product %}
+                        <article class="cart-item">
+                            <a class="cart-item-media" href="{{ product.get_absolute_url }}">
+                                <img src="{{ product.main_image.url }}" alt="{{ product.name }}">
+                            </a>
+                            <div class="cart-item-info">
+                                <h2>Weather-Ready Transparent Ripstop Shell Jacket</h2>
+                                <div class="cart-item-meta">
+                                    <span>Color: {{ item.color_name }}</span>
+                                    <span>Size: {{ item.size_name }}</span>
+                                </div>
+                                <div class="cart-item-actions">
+                                    <div class="quantity-control" aria-label="Quantity controls">
+                                        <form action="{% url 'cart:update_quantity' item.cart_key %}"
+                                            hx-get="{% url 'cart:update_quantity' item.cart_key %}"
+                                            hx-target="#catalog-shell"
+                                        >
+                                            <input type="hidden" name="action" value="decrease">
+                                            <button type="submit" aria-label="Decrease quantity">-</button>
+                                        </form>
+                                        <span>{{ item.quantity }}</span>
+                                        <form action="{% url 'cart:update_quantity' item.cart_key %}"
+                                            hx-get="{% url 'cart:update_quantity' item.cart_key %}"
+                                            hx-target="#catalog-shell"
+                                        >
+                                            <input type="hidden" name="action" value="increase">
+                                            <button type="submit" aria-label="Increase quantity">+</button>
+                                        </form>
+                                    </div>
+
+                                    <form action="{% url 'cart:remove' item.cart_key %}" method="post"
+                                        hx-post="{% url 'cart:remove' item.cart_key %}"
+                                          hx-target="#catalog-shell"
+                                    >
+                                        {% csrf_token %}
+                                        <button class="remove-button" type="submit">Remove</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="cart-item-price">
+                                {% if item.quantity > 1 %}
+                                    <strong style="font-size: 15px">${{ item.total_price }} USD</strong>
+                                    <span style="font-size: 12px">${{ item.price }} USD each</span>
+                                {% else %}
+                                    {% if product.discount %}
+                                        <strong style="font-size: 15px">${{ item.total_price }} USD</strong>
+                                        <span style="text-decoration: line-through;font-size: 12px">${{ product.price }} USD</span>
+                                    {% else %}
+                                        <strong>${{ item.total_price }} USD</strong>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </article>
+                    {% endwith %}
+                {% endfor %}
+
+            {% if cart|length > 0 %}
+                <form action="{% url 'cart:clear'%}"
+                      hx-get="{% url 'cart:clear'%}"
+                      hx-target="#catalog-shell"
+                >
+                    <button style="margin-left: 40px;" class="remove-button mt-3" type="submit">Clear all</button>
+                </form>
+            {% endif %}
+
+            <div class="empty-cart-panel">
+                    {% if cart|length == 0 %}
+                        <h2 style="color: gray; opacity: 0.4">Cart is empty..</h2>
+                    {% else %}
+                        <h2>Still Looking?</h2>
+                    {% endif %}
+                <a class="continue-link" href="{% url 'main:catalog' %}">Continue Shopping</a>
+            </div>
+        </div>
+
+        <aside class="cart-summary">
+            <h2>Order Summary</h2>
+
+            <div class="summary-lines">
+                <div class="summary-line">
+                    <span>Subtotal</span>
+                    <strong>${{ cart.get_total }} USD</strong>
+                </div>
+                <div class="summary-line">
+                    <span>Shipping</span>
+                    <strong>Free</strong>
+                </div>
+                <div class="summary-line">
+                    <span>Estimated Tax</span>
+                    <strong>Calculated at checkout</strong>
+                </div>
+            </div>
+
+            <div class="promo-box">
+                <p class="cart-summary-label">Promo Code</p>
+                <div class="promo-row">
+                    <input type="text" placeholder="Enter code">
+                    <button type="button">Apply</button>
+                </div>
+            </div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <strong>${{ cart.get_total }} USD</strong>
+            </div>
+
+            <button class="checkout-button" type="button">Checkout</button>
+            <a class="continue-link" href="#">Continue Shopping</a>
+
+            <div class="cart-help">
+                <p>Need Help?</p>
+                <a href="#">Shipping + Returns <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#">Contact Support <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#">Secure Payments <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </aside>
