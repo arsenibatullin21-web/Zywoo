@@ -148,8 +148,20 @@
 }
 
 .remove-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid rgba(17, 17, 17, 0.14);
     color: #777168;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.remove-button:hover {
+    border-color: #111;
+    background: #111;
+    color: #fff;
 }
 
 .cart-item-price {
@@ -221,10 +233,13 @@
 }
 
 .promo-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 92px;
-    gap: 8px;
     margin-top: 12px;
+}
+
+.promo-row form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 104px;
+    gap: 8px;
 }
 
 .promo-row input {
@@ -239,7 +254,45 @@
 }
 
 .promo-row button {
+    min-height: 44px;
     border: 1px solid #111;
+    background: #111;
+    color: #fff;
+    transition: background 160ms ease, color 160ms ease;
+}
+
+.promo-row button:hover {
+    background: #5e6f58;
+    color: #fff;
+}
+
+.promo-row button[type="reset"] {
+    border-color: rgba(159, 45, 32, 0.35);
+    background: transparent;
+    color: #9f2d20;
+}
+
+.promo-row button[type="reset"]:hover {
+    border-color: #9f2d20;
+    background: #9f2d20;
+    color: #fff;
+}
+
+.promo-success,
+.promo-error {
+    grid-column: 1 / -1;
+    margin: 2px 0 0;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.promo-success {
+    color: #1d7f32;
+}
+
+.promo-error {
+    color: #9f2d20;
 }
 
 .checkout-button {

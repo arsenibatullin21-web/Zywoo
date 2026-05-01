@@ -395,3 +395,17 @@ a {
 }
 
 
+.promo-success {
+    color: #1d9e1d;
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.promo-error {
+    color: #8c2626;
+    font-weight: 800;
+    font-size: 13px;
+}
+
+
+

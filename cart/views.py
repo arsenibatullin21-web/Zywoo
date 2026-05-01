@@ -3,14 +3,29 @@ from django.views.decorators.http import require_POST
 
 from cart.cart import Cart
 from cart.forms import CartAddForm
-from main.models import Product
+from main.models import Product, PromoCode
 
 
 # Create your views here.
 
-def detail(request):
+def get_cart_context(request, message=''):
     cart = Cart(request)
-    return render(request, 'cart/cart_detail.html', {'cart': cart})
+    promo_slug = request.session.get('promo_code', '')
+    promo = None
+    if promo_slug:
+        promo = PromoCode.objects.filter(name__iexact=promo_slug).first()
+    return {
+        'cart': cart,
+        'subtotal': cart.get_total(),
+        'total': cart.get_total(promo=promo),
+        'promo': promo,
+        'message': message,
+    }
+
+
+def detail(request):
+    return render(request, 'cart/cart_detail.html', get_cart_context(request))
+
 
 @require_POST
 def add(request, product_id):
@@ -35,7 +50,7 @@ def remove(request, cart_key):
     cart = Cart(request)
     cart.remove(cart_key)
     if request.headers.get('HX-Request') == 'true':
-        return render(request, 'cart/partials/cart_response.html')
+        return render(request, 'cart/partials/cart_response.html', get_cart_context(request))
     return redirect('cart:detail')
 
 
@@ -43,7 +58,7 @@ def clear(request):
     cart = Cart(request)
     cart.clear_items()
     if request.headers.get('HX-Request') == 'true':
-        return render(request, 'cart/partials/cart_response.html')
+        return render(request, 'cart/partials/cart_response.html', get_cart_context(request))
     return redirect('cart:detail')
 
 
@@ -54,5 +69,34 @@ def update_quantity(request, cart_key):
 
     cart.update_quantity(cart_key=cart_key, action=action)
     if request.headers.get('HX-Request') == 'true':
-        return render(request, 'cart/partials/cart_response.html')
+        return render(request, 'cart/partials/cart_response.html', get_cart_context(request))
     return redirect('cart:detail')
+
+
+def promo_apply(request):
+    promo_slug = request.GET.get('promo', '').strip()
+    promo = PromoCode.objects.filter(name__iexact=promo_slug).first()
+
+    if promo:
+        request.session["promo_code"] = promo.name
+        message = "Promo code applied"
+    else:
+        request.session.pop("promo_code", None)
+        message = "Invalid promo code"
+
+
+    if request.headers.get('HX-Request') == 'true':
+        return render(request, 'cart/partials/cart_partial.html', get_cart_context(request, message))
+    return redirect('cart:detail')
+
+def promo_remove(request):
+    request.session.pop('promo_code', None)
+    request.session.modified = True
+    message = ""
+
+
+    if request.headers.get('HX-Request') == 'true':
+        return render(request, 'cart/partials/cart_partial.html', get_cart_context(request, message))
+    return redirect('cart:detail')
+
+

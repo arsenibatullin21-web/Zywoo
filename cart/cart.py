@@ -1,5 +1,5 @@
 import copy
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 
 from Zywoo import settings
 from main.models import Product
@@ -54,10 +54,15 @@ class Cart:
             del self.cart[cart_key]
         self.save()
 
-    def get_total(self):
+    def get_total(self, promo=None):
         total = Decimal('0.00')
+
         for item in self.cart.values():
             total += Decimal(item['quantity']) * Decimal(item['price'])
+        if promo:
+            discount_amount = total * Decimal(promo.discount) / Decimal("100")
+            total = (total - discount_amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
         return total
 
     def update_quantity(self, cart_key, action):
@@ -91,4 +96,5 @@ class Cart:
 
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
+
 

@@ -60,6 +60,7 @@ class CatalogPageView(CatalogFilterMixin, ListView):
     model = Product
     template_name = 'main/catalog.html'
     context_object_name = 'products'
+    paginate_by = 4
 
     def get_queryset(self):
         queryset = Product.objects.filter(available=True)
@@ -77,9 +78,16 @@ class CatalogPageView(CatalogFilterMixin, ListView):
         context['selected_gender'] = self.request.GET.get('gender', '')
         context['selected_colors'] = self.request.GET.getlist('color')
         context['selected_sort'] = self.request.GET.get('sort', 'featured')
+        context['selected_category'] = self.request.GET.get('category', '')
         context['total_products'] = Product.objects.all().count()
         context['catalog_clear_url'] = reverse('main:catalog')
         context['show_gender_filter'] = True
+
+
+        query_params = self.request.GET.copy()
+        query_params.pop("page", None)
+        context["query_params"] = query_params.urlencode()
+
         return context
 
     def get_template_names(self):
@@ -95,6 +103,7 @@ class GenderPageView(CatalogFilterMixin, ListView):
     gender = None
     template_name = 'main/gender_catalog.html'
     context_object_name = 'products'
+    paginate_by = 4
 
     def get_queryset(self):
         queryset = Product.objects.filter(available=True, gender=self.gender)

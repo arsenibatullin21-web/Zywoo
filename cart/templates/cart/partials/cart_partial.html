@@ -81,7 +81,7 @@
             <div class="summary-lines">
                 <div class="summary-line">
                     <span>Subtotal</span>
-                    <strong>${{ cart.get_total }} USD</strong>
+                    <strong>${{ subtotal }} USD</strong>
                 </div>
                 <div class="summary-line">
                     <span>Shipping</span>
@@ -96,18 +96,45 @@
             <div class="promo-box">
                 <p class="cart-summary-label">Promo Code</p>
                 <div class="promo-row">
-                    <input type="text" placeholder="Enter code">
-                    <button type="button">Apply</button>
+                    {% if not promo %}
+                    <form action="{% url 'cart:promo_apply' %}"
+                          hx-get="{% url 'cart:promo_apply' %}"
+                          hx-target="#catalog-shell"
+                    >
+
+                            <input type="text" placeholder="Enter code" name="promo">
+                            <button type="submit" style="{% if cart|length == 0 %}color: gray; cursor: not-allowed;{% endif %}">APPLY</button>
+                           {% if message %}
+                                <p class="{% if promo %}promo-success{% else %}promo-error{% endif %}">
+                                    {{ message }}
+                                </p>
+                            {% endif %}
+
+                    </form>
+                    {% else %}
+                        <form action="{% url 'cart:promo_remove' %}"
+                              hx-get="{% url 'cart:promo_remove' %}"
+                              hx-target="#catalog-shell"
+                        >
+                            <input type="text" placeholder="{{ promo }}" name="promo" disabled>
+                            <button type="submit">REMOVE</button>
+                               {% if message %}
+                                <p class="{% if promo %}promo-success{% else %}promo-error{% endif %}">
+                                    {{ message }}
+                                </p>
+                            {% endif %}
+                        </form>
+                    {% endif %}
                 </div>
             </div>
 
             <div class="summary-total">
                 <span>Total</span>
-                <strong>${{ cart.get_total }} USD</strong>
+                <strong>${{ total }} USD</strong>
             </div>
 
-            <button class="checkout-button" type="button">Checkout</button>
-            <a class="continue-link" href="#">Continue Shopping</a>
+            <button class="checkout-button" style="{% if cart|length == 0 %}color: gray; cursor: not-allowed;{% endif %}" type="button">Checkout</button>
+            <a class="continue-link" href="{% url 'main:catalog' %}">Continue Shopping</a>
 
             <div class="cart-help">
                 <p>Need Help?</p>
