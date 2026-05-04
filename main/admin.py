@@ -28,14 +28,14 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug']
+    list_display = ['id','name', 'slug']
     fields = ['name', 'slug']
     search_fields = ['name']
     prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug']
+    list_display = ['id','name', 'slug']
     fields = ['name', 'slug', 'hex_code']
     search_fields = ['name']
     prepopulated_fields = {'slug': ('name',)}

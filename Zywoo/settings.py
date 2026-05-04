@@ -136,3 +136,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = "user.User"
 CART_SESSION_ID = 'cart'
+
+LOGOUT_REDIRECT_URL = 'main:home'
+LOGIN_URL = 'user:login'
+LOGIN_REDIRECT_URL = 'main:home'
