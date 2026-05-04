@@ -1,0 +1,179 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'user/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="profile-page">
+    <div class="profile-hero">
+        <div>
+            <p class="profile-kicker">Account Dashboard</p>
+            <h1>My Profile</h1>
+        </div>
+        <form action="{% url 'user:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="profile-logout">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                Logout
+            </button>
+        </form>
+    </div>
+
+    <div class="profile-layout">
+        <aside class="profile-sidebar">
+            <div class="profile-user">
+                <div class="profile-avatar">
+                    {% if user.image %}
+                        <img src="{{ user.image.url }}" alt="{{ user.username }}">
+                    {% else %}
+                        <i class="fa-regular fa-user"></i>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <h2>{{ user.get_full_name|default:user.username }}</h2>
+                    <p>{{ user.email|default:"No email added" }}</p>
+                </div>
+            </div>
+
+            <nav class="profile-nav" aria-label="Profile navigation">
+                <a href="#" class="active">
+                    <i class="fa-regular fa-user"></i>
+                    Overview
+                </a>
+                <a href="#">
+                    <i class="fa-solid fa-box"></i>
+                    Orders
+                </a>
+                <a href="#">
+                    <i class="fa-regular fa-heart"></i>
+                    Wishlist
+                </a>
+                <a href="#">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Addresses
+                </a>
+                <a href="#">
+                    <i class="fa-regular fa-credit-card"></i>
+                    Payments
+                </a>
+            </nav>
+        </aside>
+
+        <div class="profile-content">
+            <section class="profile-summary">
+                <article>
+                    <span>Subscription</span>
+                    {% if user.is_subscribed %}
+                        <strong>Active</strong>
+                        <p>Member benefits enabled</p>
+                    {% else %}
+                        <strong>Inactive</strong>
+                        <p>No active subscription</p>
+                    {% endif %}
+                </article>
+
+                <article>
+                    <span>Orders</span>
+                    <strong>0</strong>
+                    <p>Ready for your first checkout</p>
+                </article>
+
+                <article>
+                    <span>Account</span>
+                    {% if user.is_active %}
+                        <strong>Active</strong>
+                    {% else %}
+                        <strong>Disabled</strong>
+                    {% endif %}
+                    <p>Joined {{ user.date_joined|date:"M d, Y" }}</p>
+                </article>
+            </section>
+
+            <section class="profile-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="profile-kicker">Personal Information</p>
+                        <h2>Account Details</h2>
+                    </div>
+                    <a href="#">Edit</a>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span>Username</span>
+                        <strong>{{ user.username }}</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Email</span>
+                        <strong>{{ user.email|default:"Not added" }}</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>First Name</span>
+                        <strong>{{ user.first_name|default:"Not added" }}</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Last Name</span>
+                        <strong>{{ user.last_name|default:"Not added" }}</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Phone</span>
+                        <strong>{{ user.phone|default:"Not added" }}</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Stripe Customer</span>
+                        <strong>{{ user.stripe_customer_id|default:"Not connected" }}</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Created</span>
+                        <strong>{{ user.created_at|date:"M d, Y" }}</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Updated</span>
+                        <strong>{{ user.updated_at|date:"M d, Y" }}</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="profile-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="profile-kicker">Shipping</p>
+                        <h2>Saved Addresses</h2>
+                    </div>
+                    <a href="#">Add Address</a>
+                </div>
+
+                <div class="address-list">
+                    {% for address in user.addresses.all %}
+                        <article class="address-item">
+                            <div>
+                                <div class="address-title-row">
+                                    <h3>{{ address.full_name }}</h3>
+                                    {% if address.is_default %}
+                                        <span>Default</span>
+                                    {% endif %}
+                                </div>
+                                <p>{{ address.street }}</p>
+                                <p>{{ address.city }}, {{ address.country }} {{ address.postal_code }}</p>
+                                <p>{{ address.phone }}</p>
+                            </div>
+                            <a href="#">Edit</a>
+                        </article>
+                    {% empty %}
+                        <div class="empty-state">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <h3>No saved addresses</h3>
+                            <p>Add your shipping address later to make checkout faster.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+{% endblock %}

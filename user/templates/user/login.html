@@ -1,0 +1,82 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'user/css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="login-page" aria-labelledby="login-title">
+    <div class="login-visual">
+        <img
+            src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=85"
+            alt="Athlete training in performance wear"
+            class="login-visual-image"
+        >
+        <div class="login-visual-content">
+            <p>Member Access</p>
+            <h1>Built for every session after sign in.</h1>
+        </div>
+    </div>
+
+    <div class="login-content">
+        <div class="login-form-shell">
+            <p class="login-kicker">Zywoo Account</p>
+            <h2 id="login-title">Sign in</h2>
+            <p class="login-subtitle">Access your orders, saved items, cart, and member-only drops.</p>
+
+            <form class="login-form" action="{% url 'user:login' %}" method="post">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    <div class="form-errors">Incorrect email or password</div>
+                {% endif %}
+
+                <div class="form-field">
+                    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                    <input id="{{ form.username.id_for_label }}" name="username" type="text" placeholder="username" autocomplete="username">
+                </div>
+
+                <div class="form-field">
+                    <div class="field-label-row">
+                        <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                        <a href="#">Forgot?</a>
+                    </div>
+                    <input id="{{ form.password.id_for_label }}" name="password" type="password" placeholder="Enter password" autocomplete="current-password">
+                </div>
+
+                <label class="remember-row">
+                    <input type="checkbox" name="remember">
+                    <span>Keep me signed in</span>
+                </label>
+
+                <button class="login-submit" type="submit">Sign In</button>
+            </form>
+
+            <div class="login-divider">
+                <span></span>
+                <p>or continue with</p>
+                <span></span>
+            </div>
+
+            <div class="login-socials">
+                <a href="#" aria-label="Continue with Google">
+                    <i class="fa-brands fa-google"></i>
+                    Google
+                </a>
+                <a href="#" aria-label="Continue with Apple">
+                    <i class="fa-brands fa-apple"></i>
+                    Apple
+                </a>
+            </div>
+
+            <p class="register-link">
+                New to Zywoo?
+                <a href="{% url 'user:register' %}">Create an account</a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

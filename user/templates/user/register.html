@@ -1,0 +1,173 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Register{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'user/css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="register-page" aria-labelledby="register-title">
+    <div class="register-header">
+        <p class="register-kicker">Create Account</p>
+        <h1 id="register-title">Join Zywoo</h1>
+        <p>Save your cart, manage orders, build wishlists, and unlock member-only access.</p>
+    </div>
+    
+    <div class="register-layout">
+        <aside class="register-visual">
+            <img
+                src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=85"
+                alt="Training outfit in motion"
+            >
+            <div class="register-visual-content">
+                <span>Member Profile</span>
+                <h2>One account for training, checkout, and subscriptions.</h2>
+            </div>
+        </aside>
+
+        <div class="register-form-shell">
+            <form class="register-form" action="{% url 'user:register' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-section">
+                    <div class="section-title">
+                        <span>01</span>
+                        <h2>Personal Details</h2>
+                    </div>
+
+                    {% if form.non_field_errors %}
+                        <div class="form-errors">
+                            {{ form.non_field_errors.0 }}
+                        </div>
+                    {% endif %}
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                            <input id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" type="text"  value="{{ form.first_name.value|default:'' }}" placeholder="" autocomplete="given-name">
+                            {% if form.first_name.errors %}
+                                <div class="field-error">
+                                    {{ form.first_name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                            <input id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" type="text"  value="{{ form.last_name.value|default:'' }}" placeholder="" autocomplete="family-name">
+                                 {% if form.last_name.errors %}
+                                <div class="field-error">
+                                    {{ form.last_name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.username.id_for_label }}">Username</label>
+                            <input id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" type="text"  value="{{ form.username.value|default:'' }}" placeholder="" autocomplete="username"
+                                   hx-get="{% url 'user:check_username' %}"
+                                   hx-target="#check-us"
+                                   hx-trigger="keyup changed"
+                            >
+                            <div id="check-us"></div>
+
+                                 {% if form.username.errors %}
+                                <div class="field-error">
+                                    {{ form.username.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.email.id_for_label }}">Email</label>
+                            <input id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" type="email" value="{{ form.email.value|default:'' }}" placeholder="you@example.com" autocomplete="email"
+                                   hx-get="{% url 'user:check_email' %}"
+                                   hx-target="#check-em"
+                                   hx-trigger="keyup changed"
+                            >
+                                <div id="check-em"></div>
+                                 {% if form.email.errors %}
+                                <div class="field-error">
+                                    {{ form.email.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-field full">
+                            <label for="{{ form.phone.id_for_label }}">Phone</label>
+                            <input id="{{ form.phone.id_for_label }}" name="{{ form.phone.name }}" type="tel"  value="{{ form.phone.value|default:'' }}" placeholder="+7 700 000 00 00" autocomplete="tel">
+                                 {% if form.phone.errors %}
+                                <div class="field-error">
+                                    {{ form.phone.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">
+                        <span>02</span>
+                        <h2>Profile Image</h2>
+                    </div>
+
+                    <label class="image-upload" for="{{ form.image.id_for_label }}">
+                        <input id="{{ form.image.id_for_label }}" name="{{ form.image.name }}" type="file" accept="image/*">
+                        <span class="upload-icon">
+                            <i class="fa-regular fa-image"></i>
+                        </span>
+                        <span>
+                            <strong>Upload profile image</strong>
+                            <small>JPG, PNG or WEBP. You can skip this step.</small>
+                        </span>
+                             {% if form.image.errors %}
+                                <div class="field-error">
+                                    {{ form.image.errors.0 }}
+                                </div>
+                            {% endif %}
+                    </label>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">
+                        <span>03</span>
+                        <h2>Security</h2>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="{{ form.password1.id_for_label }}">Password</label>
+                            <input id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" type="password" placeholder="Create password" autocomplete="new-password">
+                                 {% if form.password1.errors %}
+                                <div class="field-error">
+                                    {{ form.password1.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-field">
+                            <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                            <input id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" type="password" placeholder="Repeat password" autocomplete="new-password">
+                                 {% if form.password2.errors %}
+                                <div class="field-error">
+                                    {{ form.password2.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <label class="terms-row">
+                        <input type="checkbox" name="terms">
+                        <span>I agree to the terms, privacy policy, and account updates.</span>
+                    </label>
+                </div>
+
+                <div class="register-actions">
+                    <button class="register-submit" type="submit">Create Account</button>
+                    <p>Already have an account? <a href="{% url 'user:login' %}">Sign in</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

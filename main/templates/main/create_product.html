@@ -1,0 +1,256 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Create Product{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/create_product.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="product-create-page" aria-labelledby="create-product-title">
+    <header class="create-product-header">
+        <div>
+            <p class="create-kicker">Product Manager</p>
+            <h1 id="create-product-title">Create Product</h1>
+        </div>
+        <a class="header-action" href="{% url 'main:catalog' %}">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to catalog
+        </a>
+    </header>
+
+    <form class="create-product-layout" action="{% url 'main:add_product' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="create-product-main">
+            <section class="form-panel">
+                <div class="panel-heading">
+                    <span>01</span>
+                    <div>
+                        <p class="create-kicker">Product</p>
+                        <h2>Basic Information</h2>
+                    </div>
+
+                    {% if form.non_field_errors %}
+                        <div class="form-errors">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field full">
+                        <label for="{{ form.name.id_for_label }}">Product Name</label>
+                        <input id="{{ form.name.id_for_label }}" name="{{ form.name.name }}" type="text" value="{{ form.name.value|default:'' }}" placeholder="Weather Ready Ripstop Shell Jacket">
+                        {% if form.name.errors %}
+                            <div class="field-error">
+                                {{ form.name.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-field">
+                        <label for="{{ form.slug.id_for_label }}">Slug</label>
+                        <input id="{{ form.slug.id_for_label }}" name="{{ form.slug.name }}" value="{{ form.slug.value|default:'' }}" type="text" placeholder="weather-ready-ripstop-shell-jacket">
+                        {% if form.slug.errors %}
+                            <div class="field-error">
+                                {{ form.slug.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-field">
+                        <label for="{{ form.category.id_for_label }}">Category</label>
+                        <select id="{{ form.category.id_for_label }}" name="{{ form.category.name }}">
+                            <option value="">Choose category</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                            {% if form.category.errors %}
+                            <div class="field-error">
+                                {{ form.category.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-field">
+                        <label for="{{ form.gender.id_for_label }}">Gender</label>
+                        <select id="{{ form.gender.id_for_label }}" name="{{ form.gender.name }}">
+                            <option value="men">Men</option>
+                            <option value="women">Women</option>
+                            <option value="unisex">Unisex</option>
+                        </select>
+                        {% if form.gender.errors %}
+                            <div class="field-error">
+                                {{ form.name.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-field">
+                        <label for="{{ form.price.id_for_label }}">Base Price</label>
+                        <input id="{{ form.price.id_for_label }}" name="{{ form.price.name }}" value="{{ form.price.value|default:'' }}" type="number" min="0" step="0.01" placeholder="36000.00">
+                        {% if form.price.errors %}
+                            <div class="field-error">
+                                {{ form.price.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-field">
+                        <label for="{{ form.discount.id_for_label }}">Product Discount Percent</label>
+                        <input id="{{ form.discount.id_for_label }}" name="{{ form.discount.name }}" type="number" min="0" max="100" step="1" value="0">
+                        {% if form.discount.errors %}
+                            <div class="field-error">
+                                {{ form.name.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-field">
+                        <label for="{{ form.rating.id_for_label }}">Rating</label>
+                        <input id="{{ form.rating.id_for_label }}" name="{{ form.rating.name }}" type="number" min="0" max="5" step="0.1" value="4.0">
+                        {% if form.rating.errors %}
+                            <div class="field-error">
+                                {{ form.rating.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-field full">
+                        <label for="{{ form.description.id_for_label }}">Description</label>
+                        <textarea id="{{ form.description.id_for_label }}" name="{{ form.description.name }}" rows="6" placeholder="Describe fabric, fit, features, and training use."></textarea>
+                        {% if form.description.errors %}
+                            <div class="field-error">
+                                {{ form.description.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <section class="form-panel">
+                <div class="panel-heading">
+                    <span>02</span>
+                    <div>
+                        <p class="create-kicker">Media</p>
+                        <h2>Product Images</h2>
+                    </div>
+                </div>
+
+                <div class="media-grid">
+                    <label class="upload-box large" for="{{ form.main_image.id_for_label }}">
+                        <input id="{{ form.main_image.id_for_label }}" name="{{ form.main_image.name }}" type="file" accept="image/*">
+                        <i class="fa-regular fa-image"></i>
+                        <strong>Main Image</strong>
+                        <small>Used in catalog and product detail hero.</small>
+                        {% if form.main_image.errors %}
+                            <div class="field-error">
+                                {{ form.main_image.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </label>
+
+                    <label class="upload-box" for="gallery_images">
+                        <input id="gallery_images" name="gallery_images" type="file" accept="image/*" multiple>
+                        <i class="fa-regular fa-images"></i>
+                        <strong>Gallery Images</strong>
+                        <small>Additional product photos.</small>
+                    </label>
+                </div>
+            </section>
+
+            <section class="form-panel">
+                <div class="panel-heading">
+                    <span>03</span>
+                    <div>
+                        <p class="create-kicker">Variants</p>
+                        <h2>Size, Color, SKU</h2>
+                    </div>
+                </div>
+
+                <div class="variant-table" aria-label="Product variants">
+                    <div class="variant-row variant-head">
+                        <span>Size</span>
+                        <span>Color</span>
+                        <span>SKU</span>
+                        <span>Price</span>
+                        <span>Discount</span>
+                        <span>Qty</span>
+                        <span>Image</span>
+                    </div>
+
+                    {% for i in variant_range %}
+                    <div class="variant-row">
+                        <select name="size_{{ i }}">
+                            <option value="">Size</option>
+                            {% for size in sizes %}
+                                <option value="{{ size.id }}">{{ size.name }}</option>
+                             {% endfor %}
+                        </select>
+                        <select name="color_{{ i }}">
+                            <option value="">Color</option>
+                            {% for color in colors %}
+                                <option value="{{ color.id }}">{{ color.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <input name="sku_{{ i }}" type="text" placeholder="ZYW-JKT-AM-S">
+                        <input name="price_{{ i }}" type="number" min="0" step="0.01" placeholder="36000.00">
+                        <input name="discount_{{ i }}" type="number" min="0" max="100" step="1" value="0">
+                        <input name="quantity_{{ i }}" type="number" min="0" step="1" placeholder="12">
+                        <input name="image_{{ i }}" type="file" accept="image/*">
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button class="secondary-button" type="button">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Variant
+                </button>
+            </section>
+        </div>
+
+        <aside class="create-product-sidebar">
+            <section class="preview-panel">
+                <div class="preview-media">
+                    <img
+                        src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85"
+                        alt="Product preview placeholder"
+                    >
+                </div>
+                <div class="preview-copy">
+                    <p class="create-kicker">Preview</p>
+                    <h2>Product Draft</h2>
+                    <p>Use this page as your frontend structure, then connect real Django forms and model data step by step.</p>
+                </div>
+            </section>
+
+            <section class="publish-panel">
+                <div class="status-field">
+                    <span>Availability</span>
+                    <label class="switch-row">
+                        <input type="checkbox" name="available" checked>
+                        <span>Product is available</span>
+                    </label>
+                </div>
+
+                <div class="status-field">
+                    <span>Checklist</span>
+                    <ul>
+                        <li>Name and category</li>
+                        <li>Main image</li>
+                        <li>At least one variant</li>
+                        <li>SKU for each variant</li>
+                    </ul>
+                </div>
+
+                <div class="publish-actions">
+                    <button class="draft-button" type="button">Save Draft</button>
+                    <button class="publish-button" type="submit">Create Product</button>
+                </div>
+            </section>
+        </aside>
+    </form>
+</section>
+{% endblock %}
