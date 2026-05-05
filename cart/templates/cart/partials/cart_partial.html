@@ -133,7 +133,8 @@
                 <strong>${{ total }} USD</strong>
             </div>
 
-            <button class="checkout-button" style="{% if cart|length == 0 %}color: gray; cursor: not-allowed;{% endif %}" type="button">Checkout</button>
+
+                <a class="checkout-button" style="{% if cart|length == 0 %}color: gray; cursor: not-allowed;{% endif %}" href="{% url 'orders:order_create' %}">Checkout</a>
             <a class="continue-link" href="{% url 'main:catalog' %}">Continue Shopping</a>
 
             <div class="cart-help">

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'subscription',
     'colorfield',
     'cart',
+    'orders',
 ]
 
 MIDDLEWARE = [

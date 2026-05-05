@@ -2,7 +2,7 @@ import copy
 from decimal import Decimal, ROUND_HALF_UP
 
 from Zywoo import settings
-from main.models import Product
+from main.models import Product, ProductVariant
 
 
 class Cart:
@@ -22,6 +22,16 @@ class Cart:
 
     def add(self, product ,color, size, override_quantity = False):
         cart_key = f"{product.id}_{color.id}_{size.id}"
+        product_variant = ProductVariant.objects.filter(
+            product=product,
+            size=size,
+            color=color,
+            available=True,
+            quantity__gt=0
+        ).first()
+
+        if not product_variant:
+            raise ValueError("Product variant does not exist")
 
         if cart_key not in self.cart:
             self.cart[cart_key] = {
@@ -32,6 +42,7 @@ class Cart:
                 'color_id': color.id,
                 'size_name': str(size.name),
                 'size_id': size.id,
+                'product_variant': product_variant
             }
 
         if override_quantity:
