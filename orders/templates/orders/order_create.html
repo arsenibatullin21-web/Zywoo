@@ -1,0 +1,249 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Checkout | Zywoo{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'orders/css/order_create.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="order-create-page" aria-labelledby="order-create-title">
+    <header class="order-hero">
+        <div>
+            <p class="order-kicker">Secure Checkout</p>
+            <h1 id="order-create-title">Create Order</h1>
+        </div>
+        <a class="order-back-link" href="{% url 'cart:detail' %}">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to cart
+        </a>
+    </header>
+
+    <form class="order-layout" action="{% url 'orders:order_create' %}" method="post">
+        {% csrf_token %}
+
+        <div class="order-form-column">
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors.0 }}
+                </div>
+            {% endif %}
+
+            <section class="order-panel">
+                <div class="panel-heading">
+                    <span>01</span>
+                    <div>
+                        <p class="order-kicker">Customer</p>
+                        <h2>Contact Information</h2>
+                    </div>
+                </div>
+
+                <div class="order-form-grid">
+                    <div class="order-field">
+                        <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                        <input
+                            id="{{ form.first_name.id_for_label }}"
+                            name="{{ form.first_name.name }}"
+                            type="text"
+                            value="{{ form.first_name.value|default:'' }}"
+                            autocomplete="given-name"
+                            placeholder="First name"
+                        >
+                        {% if form.first_name.errors %}
+                            <div class="field-error">{{ form.first_name.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="order-field">
+                        <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                        <input
+                            id="{{ form.last_name.id_for_label }}"
+                            name="{{ form.last_name.name }}"
+                            type="text"
+                            value="{{ form.last_name.value|default:'' }}"
+                            autocomplete="family-name"
+                            placeholder="Last name"
+                        >
+                        {% if form.last_name.errors %}
+                            <div class="field-error">{{ form.last_name.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="order-field">
+                        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                        <input
+                            id="{{ form.email.id_for_label }}"
+                            name="{{ form.email.name }}"
+                            type="email"
+                            value="{{ form.email.value|default:'' }}"
+                            autocomplete="email"
+                            placeholder="you@example.com"
+                        >
+                        {% if form.email.errors %}
+                            <div class="field-error">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="order-field">
+                        <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                        <input
+                            id="{{ form.phone.id_for_label }}"
+                            name="{{ form.phone.name }}"
+                            type="tel"
+                            value="{{ form.phone.value|default:'' }}"
+                            autocomplete="tel"
+                            placeholder="+7 700 000 00 00"
+                        >
+                        {% if form.phone.errors %}
+                            <div class="field-error">{{ form.phone.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <section class="order-panel">
+                <div class="panel-heading">
+                    <span>02</span>
+                    <div>
+                        <p class="order-kicker">Delivery</p>
+                        <h2>Shipping Address</h2>
+                    </div>
+                </div>
+
+                <div class="order-form-grid">
+                    <div class="order-field full">
+                        <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+                        <input
+                            id="{{ form.address.id_for_label }}"
+                            name="{{ form.address.name }}"
+                            type="text"
+                            value="{{ form.address.value|default:'' }}"
+                            autocomplete="street-address"
+                            placeholder="Street, house, apartment"
+                        >
+                        {% if form.address.errors %}
+                            <div class="field-error">{{ form.address.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="order-field">
+                        <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
+                        <input
+                            id="{{ form.city.id_for_label }}"
+                            name="{{ form.city.name }}"
+                            type="text"
+                            value="{{ form.city.value|default:'' }}"
+                            autocomplete="address-level2"
+                            placeholder="City"
+                        >
+                        {% if form.city.errors %}
+                            <div class="field-error">{{ form.city.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="order-field">
+                        <label for="{{ form.postal_code.id_for_label }}">{{ form.postal_code.label }}</label>
+                        <input
+                            id="{{ form.postal_code.id_for_label }}"
+                            name="{{ form.postal_code.name }}"
+                            type="text"
+                            value="{{ form.postal_code.value|default:'' }}"
+                            autocomplete="postal-code"
+                            placeholder="Postal code"
+                        >
+                        {% if form.postal_code.errors %}
+                            <div class="field-error">{{ form.postal_code.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <section class="order-panel">
+                <div class="panel-heading">
+                    <span>03</span>
+                    <div>
+                        <p class="order-kicker">Payment</p>
+                        <h2>Next Step</h2>
+                    </div>
+                </div>
+
+                <div class="payment-note">
+                    <i class="fa-solid fa-lock"></i>
+                    <div>
+                        <h3>Payment will be created after order confirmation.</h3>
+                        <p>Your order will be saved first, then you can connect Stripe checkout or another payment flow.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside class="order-summary">
+            <div class="summary-heading">
+                <p class="order-kicker">Order Summary</p>
+                <h2>{{ cart|length }} Item{{ cart|length|pluralize }}</h2>
+            </div>
+
+            <div class="summary-items">
+                {% for item in cart %}
+                    {% with item.product as product %}
+                        <article class="summary-item">
+                            <a class="summary-media" href="{{ product.get_absolute_url }}">
+                                <img src="{{ product.main_image.url }}" alt="{{ product.name }}">
+                            </a>
+                            <div class="summary-info">
+                                <h3>{{ product.name }}</h3>
+                                <p>Color: {{ item.color_name }}</p>
+                                <p>Size: {{ item.size_name }}</p>
+                                <p>Qty: {{ item.quantity }}</p>
+                            </div>
+                            <div class="summary-price">
+                                <strong>${{ item.total_price }}</strong>
+                                {% if item.quantity > 1 %}
+                                    <span>${{ item.price }} each</span>
+                                {% endif %}
+                            </div>
+                        </article>
+                    {% endwith %}
+                {% empty %}
+                    <div class="empty-summary">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <h3>Your cart is empty</h3>
+                        <a href="{% url 'main:catalog' %}">Continue shopping</a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="summary-lines">
+                <div>
+                    <span>Subtotal</span>
+                    <strong>${{ subtotal }} USD</strong>
+                </div>
+                <div>
+                    <span>Shipping</span>
+                    <strong>Free</strong>
+                </div>
+                <div>
+                    <span>Estimated Tax</span>
+                    <strong>Calculated later</strong>
+                </div>
+            </div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <strong>${{ total }} USD</strong>
+            </div>
+
+            <button class="place-order-button" type="submit" {% if cart|length == 0 %}disabled{% endif %}>
+                Place Order
+            </button>
+
+            <div class="checkout-help">
+                <p>Need help?</p>
+                <a href="#">Shipping + Returns <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#">Contact Support <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </aside>
+    </form>
+</section>
+{% endblock %}
